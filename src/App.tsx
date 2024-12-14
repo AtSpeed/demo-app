@@ -1,14 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
-import Products from './components/Products';
-import Contact from './components/Contact';
-import Product1 from './components/products/Product1';
-import Product2 from './components/products/Product2';
-import Product3 from './components/products/Product3';
-import SubProduct1 from './components/products/product1/SubProduct1';
-import SubProduct2 from './components/products/product1/SubProduct2';
+import routes from './routes';
 
 const App: React.FC = () => {
   return (
@@ -21,19 +13,33 @@ const App: React.FC = () => {
           <li><Link to="/contact">Contact</Link></li>
         </ul>
       </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />}>
-          <Route path="product1" element={<Product1 />}>
-            <Route path="subproduct1" element={<SubProduct1 />} />
-            <Route path="subproduct2" element={<SubProduct2 />} />
-          </Route>
-          <Route path="product2" element={<Product2 />} />
-          <Route path="product3" element={<Product3 />} />
-        </Route>
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={<route.element />}
+            >
+              {route.children && route.children.map((childRoute) => (
+                <Route
+                  key={childRoute.path}
+                  path={childRoute.path}
+                  element={<childRoute.element />}
+                >
+                  {childRoute.children && childRoute.children.map((grandChildRoute) => (
+                    <Route
+                      key={grandChildRoute.path}
+                      path={grandChildRoute.path}
+                      element={<grandChildRoute.element />}
+                    />
+                  ))}
+                </Route>
+              ))}
+            </Route>
+          ))}
+        </Routes>
+      </Suspense>
     </div>
   );
 };
