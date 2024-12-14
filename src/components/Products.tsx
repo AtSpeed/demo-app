@@ -12,7 +12,7 @@ const Products: React.FC = () => {
           <li><Link to="product3">Product 3</Link></li>
         </ul>
       </nav>
-      <Outlet /> {/* Renders the child route components */}
+      <Outlet />
     </div>
   );
 };

@@ -7,6 +7,8 @@ import Contact from './components/Contact';
 import Product1 from './components/products/Product1';
 import Product2 from './components/products/Product2';
 import Product3 from './components/products/Product3';
+import SubProduct1 from './components/products/product1/SubProduct1';
+import SubProduct2 from './components/products/product1/SubProduct2';
 
 const App: React.FC = () => {
   return (
@@ -23,7 +25,10 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />}>
-          <Route path="product1" element={<Product1 />} />
+          <Route path="product1" element={<Product1 />}>
+            <Route path="subproduct1" element={<SubProduct1 />} />
+            <Route path="subproduct2" element={<SubProduct2 />} />
+          </Route>
           <Route path="product2" element={<Product2 />} />
           <Route path="product3" element={<Product3 />} />
         </Route>
