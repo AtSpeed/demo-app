@@ -1,5 +1,12 @@
 import React from 'react';
 
+interface RouteType {
+  path: string;
+  name: string;
+  element: React.LazyExoticComponent<React.ComponentType<any>>;
+  children?: RouteType[];
+}
+
 const Home = React.lazy(() => import('./components/Home'));
 const About = React.lazy(() => import('./components/About'));
 const Products = React.lazy(() => import('./components/Products'));
@@ -10,7 +17,7 @@ const Product3 = React.lazy(() => import('./components/products/Product3'));
 const SubProduct1 = React.lazy(() => import('./components/products/product1/SubProduct1'));
 const SubProduct2 = React.lazy(() => import('./components/products/product1/SubProduct2'));
 
-const routes = [
+const routes: RouteType[] = [
   { path: '/', name: 'Home', element: Home },
   { path: '/about', name: 'About', element: About },
   { 
